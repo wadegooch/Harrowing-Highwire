@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ScalableCamera : MonoBehaviour {
 
-    public float targetWidth = 1080f;
-    public float targetHeight = 1920f;
-    public int pixelsToUnits = 30;
+    public float targetWidth = 1440f;
+    public float targetHeight = 2560f;
+    public int pixelsToUnits = 534;
 
 	// Use this for initialization
 	void Start () {
