@@ -24,6 +24,7 @@ public class CloudPool : MonoBehaviour {
         foreach (Transform cloud in cloudsPrefab.transform) {
             clouds.Add(Instantiate(cloud.gameObject, cloudPoolPosition, Quaternion.identity));
         }
+        spawnTimeDelta = 5f;
 	}
 	
 	// Update is called once per frame
