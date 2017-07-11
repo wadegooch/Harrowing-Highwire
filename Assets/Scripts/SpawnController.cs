@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpawnController : MonoBehaviour {
 
@@ -16,7 +14,7 @@ public class SpawnController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        spawnTimeDelta = Random.Range(1.0f, 5.0f);
+        spawnTimeDelta = Random.Range(1.8f, 4.75f);
 	}
 	
 	// Update is called once per frame

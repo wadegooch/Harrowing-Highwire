@@ -20,7 +20,35 @@ public class HighScoreLoader : MonoBehaviour {
 
 	}
 
-	private void GenerateScoreText(int rank, string name, string score){
+    private bool LoadScores() {
+        try {
+            string line;
+            StreamReader sr = new StreamReader("Assets/Data/highscores.csv", Encoding.Default);
+
+            using (sr) {
+                int rank = 1;
+                do {
+                    line = sr.ReadLine();
+
+                    if (line != null) {
+                        string[] entries = line.Split(',');
+                        if (entries.Length > 0)
+                            GenerateScoreText(rank, entries[0], entries[1]);
+                    }
+                    rank++;
+                }
+                while (line != null);
+                sr.Close();
+                return true;
+            }
+        }
+        catch (Exception e) {
+            Debug.Log(e.Message);
+            return false;
+        }
+    }
+
+    private void GenerateScoreText(int rank, string name, string score) {
 		GameObject ngo = new GameObject("myTextGO");
 		ngo.transform.SetParent(this.transform);
 		Text text = ngo.AddComponent<Text>();
@@ -39,39 +67,5 @@ public class HighScoreLoader : MonoBehaviour {
 
 		//Text
 		text.text = String.Format("{0:0#}. {1} : {2}", rank, name, score);
-	}
-
-	private bool LoadScores()
-	{
-		try
-		{
-			string line;
-			StreamReader f = new StreamReader("Assets/Data/highscores.csv", Encoding.Default);
-
-			using (f)
-			{
-				int rank = 1;
-				do
-				{
-					line = f.ReadLine();
-
-					if (line != null)
-					{
-						string[] entries = line.Split(',');
-						if (entries.Length > 0)
-							GenerateScoreText(rank, entries[0], entries[1]);
-					}
-					rank++;
-				}
-				while (line != null);   
-				f.Close();
-				return true;
-			}
-		}
-		catch (Exception e)
-		{
-			Debug.Log(e.Message);
-			return false;
-		}
 	}
 }

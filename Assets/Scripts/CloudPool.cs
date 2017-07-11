@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CloudPool : MonoBehaviour {
 
     public GameObject cloudsPrefab;
     public float spawnRate = 5f;
-    public float leftXPos = -5.6f;
-    public float rightXPos = 5.6f;
+    //public float leftXPos = -5.6f;
+    //public float rightXPos = 5.6f;
 
     private List<GameObject> clouds;
     private Vector2 cloudPoolPosition = new Vector2(-25f, -35f);
+    private float leftXPos;
+    private float rightXPos;
     private float yPos;
     private float spawnTimeDelta;
     private int currentCloud = 0;
@@ -18,6 +19,8 @@ public class CloudPool : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         spawnTimeDelta = 0f;
+        leftXPos = Camera.main.ViewportToWorldPoint(new Vector3(0.075f, 1)).x;
+        rightXPos = Camera.main.ViewportToWorldPoint(new Vector3(0.925f, 1)).x;
         yPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 1)).y;
         clouds = new List<GameObject>();
 

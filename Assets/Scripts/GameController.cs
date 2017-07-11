@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
@@ -60,22 +57,22 @@ public class GameController : MonoBehaviour {
             }
         } else {
 
-            //Touch controlls left/right
+            // Touch controls left/right
             foreach (Touch touch in Input.touches)
             {
                 if (touch.position.x < Screen.width / 2)
                 {
-                    //Left Touch
+                    // Left Touch
                     mrStuntMan.PositiveRotation();
                 }
                 else if (touch.position.x > Screen.width / 2)
                 {
-                    //Right Touch
+                    // Right Touch
                     mrStuntMan.NegativeRotation();
                 }
             }
 
-            //Touch controls swipe up/down
+            // Touch controls swipe up/down
             for (int i = 0; i < Input.touchCount; i++)
             {
                 float startTouchPosition = 0f;
@@ -90,12 +87,12 @@ public class GameController : MonoBehaviour {
                     endTouchPosition = touch.position.y;
                     if (endTouchPosition > startTouchPosition)
                     {
-                        //Swipe Up
+                        // Swipe Up
                         mrStuntMan.Jump();
                     }
                     else if (endTouchPosition < startTouchPosition)
                     {
-                        //Swipe Down
+                        // Swipe Down
                         mrStuntMan.Duck();
                     }
                 }

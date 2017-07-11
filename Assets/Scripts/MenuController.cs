@@ -1,21 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour {
 
-	public Text text;
+    // Use this for initialization
+    void Start() {
 
-	public void scoreScreen(){
-		Application.LoadLevel("HighScore");
-	}
+    }
 
-	public void startGame(){
-		Application.LoadLevel("Main");
-	}
+    // Update is called once per frame
+    void Update() {
 
+    }
 
+    public void LoadGame() {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void LoadMenu() {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void LoadHighScores() {
+        SceneManager.LoadScene("HighScore");
+    }
 }
