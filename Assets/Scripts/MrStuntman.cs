@@ -5,9 +5,13 @@ public class MrStuntman : MonoBehaviour {
     public float rebalanceRate = 1f;
     public float jumpDistance = 0.3f;
     public float duckScale = 0.4f;
-    public float duckTimer = 0.0f;
-    public bool ducking = false;
-    public bool jumping = false;
+    public float duckTimer = 0f;
+    public float rotationMultiplier = 2f;
+    public bool hasFallen = false;
+
+    private int balanceAngle;
+    private bool ducking = false;
+    private bool jumping = false;
 
     private float rebalanceTimeDetla;
 
@@ -18,27 +22,42 @@ public class MrStuntman : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        UpdateBalance();
-        if (ducking) {
-            duckTimer += Time.deltaTime;
+        Rebalance();
+        balanceAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
+        // Check the balance angle to see if Mr Stuntman will fall off the Highwire
+        if (10 < balanceAngle && balanceAngle < 350) {
+            hasFallen = true;
         }
-        if (duckTimer >= 1.0f && ducking) {
-            Unduck();
+        else {
+            if (ducking) {
+                duckTimer += Time.deltaTime;
+            }
+            if (duckTimer >= 1.0f && ducking) {
+                Unduck();
+            }
         }
     }
 
+    public void PositiveRotation(Vector3 rotation) {
+        transform.Rotate(rotation);
+        rebalanceTimeDetla = 0f;
+    }
+
     public void PositiveRotation() {
-        transform.Rotate(Vector3.forward * 2);
+        PositiveRotation(Vector3.forward * rotationMultiplier);
+    }
+
+    public void NegativeRotation(Vector3 rotation) {
+        transform.Rotate(rotation);
         rebalanceTimeDetla = 0f;
     }
 
     public void NegativeRotation() {
-        transform.Rotate(Vector3.back * 2);
-        rebalanceTimeDetla = 0f;
+        NegativeRotation(Vector3.back * rotationMultiplier);
     }
 
-    void UpdateBalance() {
-        int balanceAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
+    void Rebalance() {
+        balanceAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
 
         if (balanceAngle != 0) {
             rebalanceTimeDetla += Time.deltaTime;
@@ -74,7 +93,7 @@ public class MrStuntman : MonoBehaviour {
         playerheight.y = playerheight.y / duckScale;
         transform.localScale = playerheight;
         ducking = false;
-        duckTimer = 0.0f;
+        duckTimer = 0f;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

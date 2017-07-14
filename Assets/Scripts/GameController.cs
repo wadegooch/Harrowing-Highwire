@@ -3,14 +3,20 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-    public Text stepText;
-    public int steps;
     public float stepRate = 2f;
     public MrStuntman mrStuntMan;
+    public Text stepText;
+    public Text scoreText;
+    public GameObject gameOverPanel;
+
+    private int steps;
     private float stepTimeDelta;
+    private float fallTimer = 2f;
 
 	// Use this for initialization
 	void Start () {
+        Time.timeScale = 1f;
+        gameOverPanel.SetActive(false);
         steps = 0;
         UpdateSteps();
         Input.multiTouchEnabled = true;
@@ -18,33 +24,45 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (!mrStuntMan.hasFallen) {
+            // Simulate touch events from mouse events
+            HandleTouchInput();
 
-        // Simulate touch events from mouse events
-        HandleTouchInput();
+            stepTimeDelta += Time.deltaTime;
 
-        stepTimeDelta += Time.deltaTime;
-
-        if (stepTimeDelta >= stepRate) {
-            stepTimeDelta = 0f;
-            UpdateSteps();
+            if (stepTimeDelta >= stepRate) {
+                stepTimeDelta = 0f;
+                UpdateSteps();
+            }
+        }
+        else {
+            // Allow Mr Stuntman to fall before displaying game over
+            mrStuntMan.GetComponent<BoxCollider2D>().enabled = false;
+            fallTimer -= Time.deltaTime;
+            if (fallTimer <= 0.0f) {
+                // Stop the animations
+                Time.timeScale = 0f;
+                gameOverPanel.SetActive(true);
+                scoreText.text += "\n" + steps.ToString();
+            }
         }
 	}
 
     void HandleTouchInput()
     {
-        //Mouse & keyboard controlls
+        // Mouse & keyboard controls
         if (Input.touchCount == 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 if (Input.mousePosition.x < Screen.width / 2)
                 {
-                    //Left Click
+                    // Left Click
                     mrStuntMan.PositiveRotation();
                 }
                 else if (Input.mousePosition.x > Screen.width / 2)
                 {
-                    //Right Click
+                    // Right Click
                     mrStuntMan.NegativeRotation();
                 }
             }

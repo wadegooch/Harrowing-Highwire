@@ -5,16 +5,22 @@ public class SpawnController : MonoBehaviour {
     public GameObject squirrel;
     public GameObject leftBird;
     public GameObject rightBird;
+    public GameObject leftWind;
+    public GameObject rightWind;
+    public float spawnTimeMin = 1.25f;
+    public float spawnTimeMax = 4f;
 
     private float spawnTimeDelta;
-    private int enemySelection;
+    private int hazardSelection;
     private const int SQUIRREL = 0;
     private const int LEFT_BIRD = 1;
     private const int RIGHT_BIRD = 2;
+    private const int LEFT_WIND = 3;
+    private const int RIGHT_WIND = 4;
 
     // Use this for initialization
     void Start () {
-        spawnTimeDelta = Random.Range(1.8f, 4.75f);
+        spawnTimeDelta = Random.Range(spawnTimeMin, spawnTimeMax);
 	}
 	
 	// Update is called once per frame
@@ -22,33 +28,49 @@ public class SpawnController : MonoBehaviour {
         spawnTimeDelta -= Time.deltaTime;
 
         if (spawnTimeDelta <= 0) {
-            enemySelection = Random.Range(0, 3);
-            switch(enemySelection) {
-                case 0:
-                    spawnSquirrel();
+            hazardSelection = Random.Range(0, 5);
+            switch(hazardSelection) {
+                case SQUIRREL:
+                    SpawnSquirrel();
                     break;
-                case 1:
-                case 2:
-                    spawnBird(enemySelection);
+                case LEFT_BIRD:
+                case RIGHT_BIRD:
+                    SpawnBird(hazardSelection);
+                    break;
+                case LEFT_WIND:
+                case RIGHT_WIND:
+                    SpawnWind(hazardSelection);
                     break;
                 default:
                     Debug.Log("Enemy could not be selected");
                     break;
             }
-            spawnTimeDelta = Random.Range(1.0f, 5.0f);
+            spawnTimeDelta = Random.Range(spawnTimeMin, spawnTimeMax);
         }
     }
 
-    private void spawnSquirrel() {
+    private void SpawnSquirrel() {
         Instantiate(squirrel);
     }
 
-    private void spawnBird(int selection) {
+    private void SpawnBird(int selection) {
         if(selection == LEFT_BIRD) {
             Instantiate(leftBird);
         }
         else if (selection == RIGHT_BIRD) {
             Instantiate(rightBird);
+        }
+        else {
+            Debug.Log("Invalid enemy selection");
+        }
+    }
+
+    private void SpawnWind(int selection) {
+        if (selection == LEFT_WIND) {
+            Instantiate(leftWind);
+        }
+        else if (selection == RIGHT_WIND) {
+            Instantiate(rightWind);
         }
         else {
             Debug.Log("Invalid enemy selection");
