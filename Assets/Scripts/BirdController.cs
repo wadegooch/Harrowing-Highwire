@@ -19,6 +19,7 @@ public class BirdController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision is CircleCollider2D) {
+            mrStuntman.hitAudio.Play();
             mrStuntman.hasFallen = true;
         }
     }

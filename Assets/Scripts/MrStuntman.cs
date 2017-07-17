@@ -8,6 +8,9 @@ public class MrStuntman : MonoBehaviour {
     public float duckTimer = 0f;
     public float rotationMultiplier = 2f;
     public bool hasFallen = false;
+    public AudioSource stepAudio;
+    public AudioSource hitAudio;
+    public AudioSource jumpAudio;
 
     private int balanceAngle;
     private bool ducking = false;
@@ -29,6 +32,7 @@ public class MrStuntman : MonoBehaviour {
             hasFallen = true;
         }
         else {
+
             if (ducking) {
                 duckTimer += Time.deltaTime;
             }
@@ -56,7 +60,27 @@ public class MrStuntman : MonoBehaviour {
         NegativeRotation(Vector3.back * rotationMultiplier);
     }
 
-    void Rebalance() {
+    public void Jump() {
+        if (jumping || ducking) return;
+        jumping = true;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpDistance), ForceMode2D.Impulse);
+        stepAudio.mute = true;
+        jumpAudio.Play();
+    }
+
+    public void Duck() {
+        if (ducking || jumping) return;
+        ducking = true;
+        Vector2 playerHeight = transform.localScale;
+        playerHeight.y = playerHeight.y * duckScale;
+        transform.localScale = playerHeight;
+    }
+
+    public void PlayStepAudio() {
+        stepAudio.Play();
+    }
+
+    private void Rebalance() {
         balanceAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
 
         if (balanceAngle != 0) {
@@ -73,20 +97,6 @@ public class MrStuntman : MonoBehaviour {
         }
     }
 
-    public void Jump() {
-        if (jumping || ducking) return;
-        jumping = true;
-        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpDistance), ForceMode2D.Impulse);
-    }
-
-    public void Duck() {
-        if (ducking || jumping) return;
-        ducking = true;
-        Vector2 playerHeight = transform.localScale;
-        playerHeight.y = playerHeight.y * duckScale;
-        transform.localScale = playerHeight;
-    }
-
     private void Unduck() {
         if (!ducking) return;
         Vector2 playerheight = transform.localScale;
@@ -99,6 +109,7 @@ public class MrStuntman : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.name.Equals("Highwire")) {
             jumping = false;
+            stepAudio.mute = false;
         }
     }
 }

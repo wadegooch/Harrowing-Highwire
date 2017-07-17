@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
     public Text stepText;
     public Text scoreText;
     public GameObject gameOverPanel;
+    public AudioSource fallAudio;
 
     private int steps;
     private float stepTimeDelta;

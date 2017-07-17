@@ -8,7 +8,7 @@ public class SpawnController : MonoBehaviour {
     public GameObject leftWind;
     public GameObject rightWind;
     public float spawnTimeMin = 1.25f;
-    public float spawnTimeMax = 4f;
+    public float spawnTimeMax = 3f;
 
     private float spawnTimeDelta;
     private int hazardSelection;
