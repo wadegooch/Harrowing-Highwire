@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 using System.IO;
 using System;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class HighScoreLoader : MonoBehaviour {
 
@@ -50,7 +46,7 @@ public class HighScoreLoader : MonoBehaviour {
 
     private void GenerateScoreText(int rank, string name, string score) {
 		GameObject ngo = new GameObject("myTextGO");
-		ngo.transform.SetParent(this.transform);
+		ngo.transform.SetParent(transform);
 		Text text = ngo.AddComponent<Text>();
 
 		//Font setup
@@ -61,7 +57,7 @@ public class HighScoreLoader : MonoBehaviour {
 		text.color = Color.black;
 
 		//Positioning
-		this.transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
+		transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
 		text.GetComponent<RectTransform>().position = new Vector3 (0.0f, Screen.height/2 - rank * 25.0f, 0.0f);
 		text.GetComponent<RectTransform>().sizeDelta = new Vector2 (200.0f, 50.0f);
 
