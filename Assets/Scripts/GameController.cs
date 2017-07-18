@@ -1,13 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
     public MrStuntman mrStuntMan;
+    public HighScoreController highScoreController;
     public Text stepText;
-    public Text scoreText;
+    public Text goScoreText;
+    public Text nhsScoreText;
+    public InputField highScoreInput;
     public GameObject pausePanel;
     public GameObject gameOverPanel;
+    public GameObject highScorePanel;
 
     private float stepRate = 0.5f;
     private float fallTimer = 2f;
@@ -21,6 +27,7 @@ public class GameController : MonoBehaviour {
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
         gameOverPanel.SetActive(false);
+        highScorePanel.SetActive(false);
         steps = 1;
         UpdateSteps();
         Input.multiTouchEnabled = true;
@@ -49,16 +56,22 @@ public class GameController : MonoBehaviour {
             }
         }
         else {
-            // Allow Mr Stuntman to fall before displaying game over
+            // Allow Mr Stuntman to fall before displaying game over or high score
             mrStuntMan.GetComponent<BoxCollider2D>().enabled = false;
             fallTimer -= Time.deltaTime;
             if (fallTimer <= 0.0f) {
                 // Stop the animations
                 Time.timeScale = 0f;
-                gameOverPanel.SetActive(true);
                 UpdateSteps();
-                scoreText.text += "\n" + steps.ToString();
                 fallTimer = 2f;
+                if (highScoreController.IsNewHighScore(steps)) {
+                    nhsScoreText.text += "\n" + steps.ToString();
+                    highScorePanel.SetActive(true);
+                }
+                else {
+                    goScoreText.text += "\n" + steps.ToString();
+                    gameOverPanel.SetActive(true);
+                }
             }
         }
     }
@@ -137,6 +150,12 @@ public class GameController : MonoBehaviour {
         isPaused = false;
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
+    }
+
+    public void SubmitHighScore() {
+        KeyValuePair<string, int> highScoreKVP = new KeyValuePair<string, int>(highScoreInput.text, steps);
+        highScoreController.SaveNewScore(highScoreKVP);
+        SceneManager.LoadScene("Menu");
     }
 
     private void UpdateSteps() {
