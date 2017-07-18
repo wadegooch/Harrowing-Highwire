@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
     private float stepRate = 0.5f;
     private float fallTimer = 2f;
     private bool isPaused = false;
+    private string sfxPrefsKey = "AreSoundEffectsOn";
     private int steps;
     private float stepTimeDelta;
 
@@ -23,6 +24,14 @@ public class GameController : MonoBehaviour {
         steps = 1;
         UpdateSteps();
         Input.multiTouchEnabled = true;
+        if (PlayerPrefs.HasKey(sfxPrefsKey)) {
+            if (PlayerPrefs.GetInt(sfxPrefsKey) > 0) {
+                AudioListener.pause = true;
+            }
+            else {
+                AudioListener.pause = false;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -119,6 +128,7 @@ public class GameController : MonoBehaviour {
     public void PauseGame() {
         isPaused = true;
         mrStuntMan.PositiveRotation();
+        mrStuntMan.GetComponent<Rigidbody2D>().angularVelocity = 0f;
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
     }

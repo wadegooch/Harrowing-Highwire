@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
+
+    public Toggle tutorialToggle;
 
     private string tutorialPrefsKey = "IsTutorialOn";
 
@@ -32,6 +35,10 @@ public class MenuController : MonoBehaviour {
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void LoadSettings() {
+        SceneManager.LoadScene("Settings");
+    }
+
     public void TransitionFromMenu() {
         if (PlayerPrefs.HasKey(tutorialPrefsKey)) {
             if (PlayerPrefs.GetInt(tutorialPrefsKey) == 0) {
@@ -44,5 +51,16 @@ public class MenuController : MonoBehaviour {
         else {
             LoadTutorial();
         }
+    }
+
+    public void TransitionFromTutorial() {
+        if (tutorialToggle.isOn) {
+            PlayerPrefs.SetInt(tutorialPrefsKey, 1);
+        }
+        else {
+            PlayerPrefs.SetInt(tutorialPrefsKey, 0);
+        }
+        PlayerPrefs.Save();
+        LoadGame();
     }
 }
