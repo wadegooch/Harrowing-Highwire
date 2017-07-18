@@ -19,12 +19,12 @@ public class MenuController : MonoBehaviour {
 
     }
 
-    public void LoadGame() {
+    public void LoadMenu() {
         SceneManager.LoadScene("Main");
     }
 
-    public void LoadMenu() {
-        SceneManager.LoadScene("Menu");
+    public void LoadGame() {
+        SceneManager.LoadScene("Game");
     }
 
     public void LoadHighScores() {

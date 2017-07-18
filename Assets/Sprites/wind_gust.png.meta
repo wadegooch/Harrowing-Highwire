@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a37e6e2a871c9334f87cc66836ef462c
-timeCreated: 1500005746
+timeCreated: 1500401988
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,14 @@ TextureImporter:
     21300010: wind_gust_5
     21300012: wind_gust_6
     21300014: wind_gust_7
+    21300016: wind_gust_8
+    21300018: wind_gust_9
+    21300020: wind_gust_10
+    21300022: wind_gust_11
+    21300024: wind_gust_12
+    21300026: wind_gust_13
+    21300028: wind_gust_14
+    21300030: wind_gust_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -97,8 +105,8 @@ TextureImporter:
       name: wind_gust_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 299
+        x: 84
+        y: 875
         width: 48
         height: 39
       alignment: 0
@@ -110,10 +118,10 @@ TextureImporter:
       name: wind_gust_1
       rect:
         serializedVersion: 2
-        x: 143
-        y: 297
-        width: 57
-        height: 45
+        x: 339
+        y: 874
+        width: 52
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,10 +131,10 @@ TextureImporter:
       name: wind_gust_2
       rect:
         serializedVersion: 2
-        x: 266
-        y: 288
-        width: 74
-        height: 61
+        x: 591
+        y: 873
+        width: 57
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,10 +144,10 @@ TextureImporter:
       name: wind_gust_3
       rect:
         serializedVersion: 2
-        x: 12
-        y: 174
-        width: 72
-        height: 35
+        x: 847
+        y: 868
+        width: 63
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,10 +157,10 @@ TextureImporter:
       name: wind_gust_4
       rect:
         serializedVersion: 2
-        x: 35
-        y: 152
-        width: 70
-        height: 80
+        x: 77
+        y: 608
+        width: 71
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,10 +170,10 @@ TextureImporter:
       name: wind_gust_5
       rect:
         serializedVersion: 2
-        x: 138
-        y: 161
-        width: 74
-        height: 61
+        x: 332
+        y: 619
+        width: 63
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,10 +183,10 @@ TextureImporter:
       name: wind_gust_6
       rect:
         serializedVersion: 2
-        x: 271
-        y: 169
-        width: 57
-        height: 45
+        x: 359
+        y: 606
+        width: 55
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,8 +196,112 @@ TextureImporter:
       name: wind_gust_7
       rect:
         serializedVersion: 2
-        x: 20
-        y: 43
+        x: 588
+        y: 622
+        width: 72
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_8
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 600
+        width: 70
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_9
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 619
+        width: 63
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_10
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 606
+        width: 55
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_11
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 352
+        width: 71
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_12
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 356
+        width: 63
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_13
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 361
+        width: 57
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_14
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 362
+        width: 52
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wind_gust_15
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 107
         width: 48
         height: 39
       alignment: 0

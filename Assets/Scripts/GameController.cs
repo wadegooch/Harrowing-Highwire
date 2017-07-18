@@ -155,7 +155,7 @@ public class GameController : MonoBehaviour {
     public void SubmitHighScore() {
         KeyValuePair<string, int> highScoreKVP = new KeyValuePair<string, int>(highScoreInput.text, steps);
         highScoreController.SaveNewScore(highScoreKVP);
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Main");
     }
 
     private void UpdateSteps() {

@@ -41,6 +41,6 @@ public class SettingsController : MonoBehaviour {
         PlayerPrefs.SetInt(tutorialPrefsKey, tutorialPref);
         PlayerPrefs.SetInt(sfxPrefsKey, sfxPref);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Main");
     }
 }
