@@ -7,19 +7,19 @@ public class SquirrelController : MonoBehaviour {
     private MrStuntman mrStuntman;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         mrStuntman = FindObjectOfType<MrStuntman>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         transform.position += new Vector3(0f, runSpeed) * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision is BoxCollider2D && collision && collision.attachedRigidbody.velocity == new Vector2(0.0f, 0.0f)) {
             mrStuntman.hitAudio.Play();
-            mrStuntman.hasFallen = true;
+            mrStuntman.Fall();
         }
     }
 

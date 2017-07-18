@@ -7,29 +7,29 @@ public class SpawnController : MonoBehaviour {
     public GameObject rightBird;
     public GameObject leftWind;
     public GameObject rightWind;
-    public float spawnTimeMin = 1.25f;
-    public float spawnTimeMax = 3f;
 
-    private float spawnTimeDelta;
-    private int hazardSelection;
+    private float spawnTimeMin = 1.25f;
+    private float spawnTimeMax = 3f;
     private const int SQUIRREL = 0;
     private const int LEFT_BIRD = 1;
     private const int RIGHT_BIRD = 2;
     private const int LEFT_WIND = 3;
     private const int RIGHT_WIND = 4;
+    private float spawnTimeDelta;
+    private int hazardSelection;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         spawnTimeDelta = Random.Range(spawnTimeMin, spawnTimeMax);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update() {
         spawnTimeDelta -= Time.deltaTime;
 
         if (spawnTimeDelta <= 0) {
             hazardSelection = Random.Range(0, 5);
-            switch(hazardSelection) {
+            switch (hazardSelection) {
                 case SQUIRREL:
                     SpawnSquirrel();
                     break;
@@ -42,7 +42,7 @@ public class SpawnController : MonoBehaviour {
                     SpawnWind(hazardSelection);
                     break;
                 default:
-                    Debug.Log("Enemy could not be selected");
+                    Debug.LogError("Enemy could not be selected");
                     break;
             }
             spawnTimeDelta = Random.Range(spawnTimeMin, spawnTimeMax);
@@ -54,14 +54,14 @@ public class SpawnController : MonoBehaviour {
     }
 
     private void SpawnBird(int selection) {
-        if(selection == LEFT_BIRD) {
+        if (selection == LEFT_BIRD) {
             Instantiate(leftBird);
         }
         else if (selection == RIGHT_BIRD) {
             Instantiate(rightBird);
         }
         else {
-            Debug.Log("Invalid enemy selection");
+            Debug.LogError("Invalid enemy selection");
         }
     }
 
@@ -73,7 +73,7 @@ public class SpawnController : MonoBehaviour {
             Instantiate(rightWind);
         }
         else {
-            Debug.Log("Invalid enemy selection");
+            Debug.LogError("Invalid enemy selection");
         }
     }
 }

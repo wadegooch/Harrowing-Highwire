@@ -1,23 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WindController : MonoBehaviour {
 
-    public float persistTimeDelta = 3f;
-    public float rotationMultiplier = 0.1f;
-
     public MrStuntman mrStuntman;
+
+    private float persistTimeDelta = 3f;
+    private float rotationMultiplier = 0.1f;
     private bool isActive = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         mrStuntman = FindObjectOfType<MrStuntman>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (isActive) {
+    }
+
+    // Update is called once per frame
+    void Update() {
+        if (isActive) {
             persistTimeDelta -= Time.deltaTime;
             if (persistTimeDelta <= 0f) {
                 Destroy(gameObject);
@@ -32,7 +30,7 @@ public class WindController : MonoBehaviour {
                 mrStuntman.PositiveRotation(Vector3.forward * rotationMultiplier);
             }
         }
-	}
+    }
 
     public void OnBecameVisible() {
         isActive = true;

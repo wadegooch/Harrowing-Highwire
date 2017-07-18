@@ -2,20 +2,20 @@
 
 public class MrStuntman : MonoBehaviour {
 
-    public float rebalanceRate = 1f;
-    public float jumpDistance = 0.3f;
-    public float duckScale = 0.4f;
-    public float duckTimer = 0f;
-    public float rotationMultiplier = 2f;
     public bool hasFallen = false;
     public AudioSource stepAudio;
     public AudioSource hitAudio;
     public AudioSource jumpAudio;
+    public AudioSource fallAudio;
 
-    private int balanceAngle;
+    private float rebalanceRate = 1f;
+    private float jumpDistance = 0.35f;
+    private float duckScale = 0.8f;
+    private float duckTimer = 0f;
     private bool ducking = false;
     private bool jumping = false;
-
+    private float rotationMultiplier = 2f;
+    private int balanceAngle;
     private float rebalanceTimeDetla;
 
     // Use this for initialization
@@ -25,19 +25,21 @@ public class MrStuntman : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Rebalance();
-        balanceAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
-        // Check the balance angle to see if Mr Stuntman will fall off the Highwire
-        if (10 < balanceAngle && balanceAngle < 350) {
-            hasFallen = true;
-        }
-        else {
-
-            if (ducking) {
-                duckTimer += Time.deltaTime;
+        if (!hasFallen) {
+            Rebalance();
+            balanceAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
+            // Check the balance angle to see if Mr Stuntman will fall off the Highwire
+            if (10 < balanceAngle && balanceAngle < 350) {
+                Fall();
             }
-            if (duckTimer >= 1.0f && ducking) {
-                Unduck();
+            else {
+
+                if (ducking) {
+                    duckTimer += Time.deltaTime;
+                }
+                if (duckTimer >= 1.0f && ducking) {
+                    Unduck();
+                }
             }
         }
     }
@@ -78,6 +80,12 @@ public class MrStuntman : MonoBehaviour {
 
     public void PlayStepAudio() {
         stepAudio.Play();
+    }
+
+    public void Fall() {
+        stepAudio.mute = true;
+        fallAudio.Play();
+        hasFallen = true;
     }
 
     private void Rebalance() {

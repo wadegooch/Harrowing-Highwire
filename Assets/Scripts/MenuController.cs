@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour {
 
+    private string tutorialPrefsKey = "IsTutorialOn";
+
+
     // Use this for initialization
     void Start() {
 
@@ -23,5 +26,23 @@ public class MenuController : MonoBehaviour {
 
     public void LoadHighScores() {
         SceneManager.LoadScene("HighScore");
+    }
+
+    public void LoadTutorial() {
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    public void TransitionFromMenu() {
+        if (PlayerPrefs.HasKey(tutorialPrefsKey)) {
+            if (PlayerPrefs.GetInt(tutorialPrefsKey) == 0) {
+                LoadTutorial();
+            }
+            else {
+                LoadGame();
+            }
+        }
+        else {
+            LoadTutorial();
+        }
     }
 }
