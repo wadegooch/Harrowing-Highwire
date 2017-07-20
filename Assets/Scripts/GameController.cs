@@ -103,38 +103,36 @@ public class GameController : MonoBehaviour {
                 }
             }
             else {
-                if (Input.touchCount == 1) {
-                    // Get the single touch
-                    Touch touch = Input.GetTouch(0);
-                    if (touch.phase == TouchPhase.Began) {
-                        touchStartPos = touch.position;
-                        touchEndPos = touch.position;
-                    }
-                    // Update the end position based on where the touch is after Update
-                    else if (touch.phase == TouchPhase.Moved) {
-                        touchEndPos = touch.position;
-                    }
-                    // End of touch
-                    else if (touch.phase == TouchPhase.Ended) {
-                        touchEndPos = touch.position;
+                // Get the single touch
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began) {
+                    touchStartPos = touch.position;
+                    touchEndPos = touch.position;
+                }
+                // Update the end position based on where the touch is after Update
+                else if (touch.phase == TouchPhase.Moved) {
+                    touchEndPos = touch.position;
+                }
+                // End of touch
+                else if (touch.phase == TouchPhase.Ended) {
+                    touchEndPos = touch.position;
 
-                        // Check if drag distance is greater than 20% of the screen height
-                        if (Mathf.Abs(touchEndPos.x - touchStartPos.x) > dragThreshold || Mathf.Abs(touchEndPos.y - touchStartPos.y) > dragThreshold) {
-                            if (touchEndPos.y > touchStartPos.y) {
-                                mrStuntman.Jump();
-                            }
-                            else {
-                                mrStuntman.Duck();
-                            }
+                    // Check if drag distance is greater than 20% of the screen height
+                    if (Mathf.Abs(touchEndPos.x - touchStartPos.x) > dragThreshold || Mathf.Abs(touchEndPos.y - touchStartPos.y) > dragThreshold) {
+                        if (touchEndPos.y > touchStartPos.y) {
+                            mrStuntman.Jump();
                         }
-                        // Input is a tap
                         else {
-                            if (touchEndPos.x < Screen.width / 2) {
-                                mrStuntman.PositiveRotation();
-                            }
-                            else {
-                                mrStuntman.NegativeRotation();
-                            }
+                            mrStuntman.Duck();
+                        }
+                    }
+                    // Input is a tap
+                    else {
+                        if (touchEndPos.x < Screen.width / 2) {
+                            mrStuntman.PositiveRotation();
+                        }
+                        else {
+                            mrStuntman.NegativeRotation();
                         }
                     }
                 }
