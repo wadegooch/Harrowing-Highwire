@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-    public MrStuntman mrStuntMan;
+    public MrStuntman mrStuntman;
     public HighScoreController highScoreController;
     public Text stepText;
     public Text goScoreText;
@@ -21,10 +21,14 @@ public class GameController : MonoBehaviour {
     private string sfxPrefsKey = "AreSoundEffectsOn";
     private int steps;
     private float stepTimeDelta;
+    private Vector2 touchStartPos;
+    private Vector2 touchEndPos;
+    private float dragThreshold;
 
     // Use this for initialization
     void Start() {
         Time.timeScale = 1f;
+        dragThreshold = Screen.height * (15 / 100);
         pausePanel.SetActive(false);
         gameOverPanel.SetActive(false);
         highScorePanel.SetActive(false);
@@ -43,7 +47,7 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!mrStuntMan.hasFallen) {
+        if (!mrStuntman.hasFallen) {
             // Simulate touch events from mouse events
             HandleTouchInput();
 
@@ -57,7 +61,7 @@ public class GameController : MonoBehaviour {
         }
         else {
             // Allow Mr Stuntman to fall before displaying game over or high score
-            mrStuntMan.GetComponent<BoxCollider2D>().enabled = false;
+            mrStuntman.GetComponent<BoxCollider2D>().enabled = false;
             fallTimer -= Time.deltaTime;
             if (fallTimer <= 0.0f) {
                 // Stop the animations
@@ -83,56 +87,56 @@ public class GameController : MonoBehaviour {
                 if (Input.GetMouseButtonDown(0)) {
                     if (Input.mousePosition.x < Screen.width / 2) {
                         // Left Click
-                        mrStuntMan.PositiveRotation();
+                        mrStuntman.PositiveRotation();
                     }
                     else if (Input.mousePosition.x > Screen.width / 2) {
                         // Right Click
-                        mrStuntMan.NegativeRotation();
+                        mrStuntman.NegativeRotation();
                     }
                 }
 
                 if (Input.GetKeyDown("space")) {
-                    mrStuntMan.Jump();
+                    mrStuntman.Jump();
                 }
                 else if (Input.GetKeyDown("d")) {
-                    mrStuntMan.Duck();
+                    mrStuntman.Duck();
                 }
             }
             else {
-                // Touch controls left/right
-                foreach (Touch touch in Input.touches) {
-                    if (touch.position.x < Screen.width / 2) {
-                        // Left Touch
-                        mrStuntMan.PositiveRotation();
-                    }
-                    else if (touch.position.x > Screen.width / 2) {
-                        // Right Touch
-                        mrStuntMan.NegativeRotation();
-                    }
-                }
-
-                // Touch controls swipe up/down
-                for (int i = 0; i < Input.touchCount; i++) {
-
-                    float startTouchPosition = 0f;
-                    float endTouchPosition = 0f;
-                    Touch touch = Input.GetTouch(i);
-
+                if (Input.touchCount == 1) {
+                    // Get the single touch
+                    Touch touch = Input.GetTouch(0);
                     if (touch.phase == TouchPhase.Began) {
-                        startTouchPosition = touch.position.y;
+                        touchStartPos = touch.position;
+                        touchEndPos = touch.position;
                     }
+                    // Update the end position based on where the touch is after Update
+                    else if (touch.phase == TouchPhase.Moved) {
+                        touchEndPos = touch.position;
+                    }
+                    // End of touch
                     else if (touch.phase == TouchPhase.Ended) {
-                        endTouchPosition = touch.position.y;
-                        if (endTouchPosition > startTouchPosition) {
-                            // Swipe Up
-                            mrStuntMan.Jump();
+                        touchEndPos = touch.position;
+
+                        // Check if drag distance is greater than 20% of the screen height
+                        if (Mathf.Abs(touchEndPos.x - touchStartPos.x) > dragThreshold || Mathf.Abs(touchEndPos.y - touchStartPos.y) > dragThreshold) {
+                            if (touchEndPos.y > touchStartPos.y) {
+                                mrStuntman.Jump();
+                            }
+                            else {
+                                mrStuntman.Duck();
+                            }
                         }
-                        else if (endTouchPosition < startTouchPosition) {
-                            // Swipe Down
-                            mrStuntMan.Duck();
+                        // Input is a tap
+                        else {
+                            if (touchEndPos.x < Screen.width / 2) {
+                                mrStuntman.PositiveRotation();
+                            }
+                            else {
+                                mrStuntman.NegativeRotation();
+                            }
                         }
                     }
-
                 }
             }
         }
@@ -140,8 +144,8 @@ public class GameController : MonoBehaviour {
 
     public void PauseGame() {
         isPaused = true;
-        mrStuntMan.PositiveRotation();
-        mrStuntMan.GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        mrStuntman.PositiveRotation();
+        mrStuntman.GetComponent<Rigidbody2D>().angularVelocity = 0f;
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
     }

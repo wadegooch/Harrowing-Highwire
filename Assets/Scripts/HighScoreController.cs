@@ -10,12 +10,14 @@ public class HighScoreController : MonoBehaviour {
 
     public List<Text> highScoreTextFields;
 
-    private string dataFilePath = "Assets/Data/highscores.csv";
+    private const int HIGH_SCORE_CAPACITY = 10;
     private List<KeyValuePair<string, int>> highScoreList = new List<KeyValuePair<string, int>>();
+    private string dataFilePath;
 
-	// Use this for initialization
-	void Start () {
-		LoadScores();
+    // Use this for initialization
+    void Start () {
+        dataFilePath = Application.persistentDataPath + "/highscores.csv";
+        LoadScores();
         if (highScoreTextFields.Any()) {
             PrintScores();
         }
@@ -28,19 +30,35 @@ public class HighScoreController : MonoBehaviour {
 
     public bool IsNewHighScore(int score) {
         bool isHighScore = false;
-        foreach (KeyValuePair<string, int> kvp in highScoreList) {
-            if (score > kvp.Value) {
-                isHighScore = true;
-                break;
+
+        if (highScoreList.Count < HIGH_SCORE_CAPACITY) {
+            isHighScore = true;
+        }
+        else {
+            foreach (KeyValuePair<string, int> kvp in highScoreList) {
+                if (score > kvp.Value) {
+                    isHighScore = true;
+                    break;
+                }
             }
         }
+
         return isHighScore;
     }
 
     public void SaveNewScore(KeyValuePair<string, int> kvp) {
-        for (int i = highScoreList.Count-1; i > 0; i--) {
-            if (kvp.Value > highScoreList[i].Value) {
-                highScoreList[i] = kvp;
+        for (int i = 0; i < HIGH_SCORE_CAPACITY; i++) {
+            if (highScoreList.Count != 0 && i < highScoreList.Count) {
+                if (kvp.Value > highScoreList[i].Value) {
+                    highScoreList.Insert(i, kvp);
+                    if (highScoreList.Count > HIGH_SCORE_CAPACITY) {
+                        highScoreList.RemoveAt(highScoreList.Count - 1);
+                    }
+                    break;
+                }
+            }
+            else {
+                highScoreList.Insert(i, kvp);
                 break;
             }
         }
@@ -48,7 +66,8 @@ public class HighScoreController : MonoBehaviour {
         int index = 0;
         try {
             string line;
-            StreamWriter sw = new StreamWriter(dataFilePath, false, Encoding.Default);
+            FileStream fs = new FileStream(dataFilePath, FileMode.OpenOrCreate);
+            StreamWriter sw = new StreamWriter(fs, Encoding.Default);
 
             using (sw) {
                 do {
@@ -68,7 +87,8 @@ public class HighScoreController : MonoBehaviour {
     private void LoadScores() {
         try {
             string line;
-            StreamReader sr = new StreamReader(dataFilePath, Encoding.Default);
+            FileStream fs = new FileStream(dataFilePath, FileMode.OpenOrCreate);
+            StreamReader sr = new StreamReader(fs, Encoding.Default);
 
             using (sr) {
                 do {
@@ -94,7 +114,7 @@ public class HighScoreController : MonoBehaviour {
     }
 
     private void PrintScores() {
-        for (int i = 0; i < highScoreTextFields.Count; i++) {
+        for (int i = 0; i < highScoreList.Count; i++) {
             highScoreTextFields[i].text += highScoreList[i].Value + ", " + highScoreList[i].Key;
         }
     }
